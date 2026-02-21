@@ -1799,7 +1799,7 @@
         <form id="checkoutFormPage" onsubmit="submitOrderFromPage(event)">
             <div class="form-group">
                 <label class="form-label">الاسم الكامل *</label>
-                <input type="text" class="form-input" required placeholder="اسمك الثلاثي">
+                <input type="text" class="form-input" required placeholder="اسمك">
             </div>
 
             <div class="form-group">
@@ -2406,7 +2406,7 @@
             const wilayaName = wilayas.find(w => w.code === document.getElementById('wilayaSelectPage').value)?.name;
 
             let message = '🛍️ *طلب جديد من Nina Touch*\\n\\n';
-            message += '👤 *الاسم:* ' + e.target.querySelector('input[placeholder="اسمك الثلاثي"]').value + '\\n';
+            message += '👤 *الاسم:* ' + e.target.querySelector('input[placeholder="اسمك"]').value + '\\n';
             message += '📱 *الهاتف:* ' + e.target.querySelector('input[placeholder="05XX XX XX XX"]').value + '\\n';
             message += '📍 *الولاية:* ' + wilayaName + '\\n';
             message += '🏘️ *البلدية:* ' + e.target.querySelector('input[placeholder="اسم البلدية"]').value + '\\n';
@@ -2536,5 +2536,6 @@
         });
     </script>
 </body>
+
 
 </html>
