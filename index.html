@@ -1770,11 +1770,7 @@
                 <p>نوصل لجميع ولايات الجزائر في أسرع وقت</p>
             </div>
 
-            <div class="feature-card">
-                <i class="fas fa-undo feature-icon"></i>
-                <h3 class="feature-title">استبدال سهل</h3>
-                <p>يمكنك استبدال المنتج خلال 7 أيام</p>
-            </div>
+
 
             <div class="feature-card">
                 <i class="fas fa-medal feature-icon"></i>
@@ -2497,18 +2493,48 @@
         }
 
         document.getElementById('searchInput').addEventListener('input', function (e) {
-            const term = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.product-card');
+            const term = e.target.value.toLowerCase().trim();
+            const grid = document.getElementById('productsGrid');
 
-            // التأكد من أننا في صفحة المتجر عند البحث
             if (term.length > 0 && !document.getElementById('shopPage').classList.contains('active')) {
                 showShop();
             }
 
-            cards.forEach(card => {
-                const title = card.querySelector('.product-title').textContent.toLowerCase();
-                card.style.display = title.includes(term) ? 'block' : 'none';
-            });
+            const filteredProducts = products.filter(p =>
+                p.title.toLowerCase().includes(term) ||
+                p.desc.toLowerCase().includes(term)
+            );
+
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-light);">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; opacity: 0.3;"></i>
+                        <p>عذراً، لم نجد منتجات تطابق بحثك</p>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = filteredProducts.map(product => `
+                    <div class="product-card" onclick="openProductDetail(${product.id})">
+                        <div class="cart-icon-small" onclick="event.stopPropagation(); quickAddToCart(${product.id})">
+                            <i class="fas fa-cart-plus"></i>
+                        </div>
+                        <div class="product-image">
+                            <img src="${product.images[0]}" alt="${product.title}">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.title}</h3>
+                            <div class="product-price">${product.price.toLocaleString()} دج</div>
+                            <div class="product-meta">
+                                <span class="meta-item">مقاسات: ${product.sizes.join(', ')}</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); openProductDetail(${product.id})">
+                                <i class="fas fa-eye"></i>
+                                عرض التفاصيل
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
         });
     </script>
 </body>
