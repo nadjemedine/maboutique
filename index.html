@@ -1725,21 +1725,13 @@
         </button>
         <h2 class="menu-title">القائمة</h2>
 
-        <a href="tel:0563413607" class="menu-item">
+        <a href="tel:05563413607" class="menu-item">
             <i class="fas fa-phone-alt"></i>
             <div>
                 <div style="font-weight: 700;">اتصال مباشر</div>
-                <div style="font-size: 14px; color: var(--text-light);">0563413607</div>
             </div>
         </a>
 
-        <a href="https://wa.me/213563413607" class="menu-item" target="_blank">
-            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
-            <div>
-                <div style="font-weight: 700;">واتساب</div>
-                <div style="font-size: 14px; color: var(--text-light);">استفسار عبر الواتساب</div>
-            </div>
-        </a>
 
         <div class="menu-item" onclick="showCustomerService()">
             <i class="fas fa-headset"></i>
@@ -2433,7 +2425,7 @@
 
             message += '\\n💰 *المجموع:* ' + document.getElementById('finalTotalPage').textContent;
 
-            window.open(`https://wa.me/213563413607?text=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://wa.me/213542432117?text=${encodeURIComponent(message)}`, '_blank');
 
             cart = [];
             updateCartUI();
@@ -2447,14 +2439,19 @@
         }
 
         function toggleSearch() {
-            document.getElementById('searchBar').classList.toggle('active');
-            if (document.getElementById('searchBar').classList.contains('active')) {
+            const searchBar = document.getElementById('searchBar');
+            searchBar.classList.toggle('active');
+            if (searchBar.classList.contains('active')) {
                 document.getElementById('searchInput').focus();
+                // الانتقال لصفحة المتجر إذا لم نكن فيها ليظهر البحث
+                if (!document.getElementById('shopPage').classList.contains('active')) {
+                    showShop();
+                }
             }
         }
 
         function showCustomerService() {
-            alert('خدمة الزبائن: 0563413607\nمتاحون من الساعة 9 صباحاً حتى 6 مساءً');
+            window.open('https://wa.me/213563413607', '_blank');
         }
 
         function showNotification(message) {
@@ -2502,6 +2499,11 @@
         document.getElementById('searchInput').addEventListener('input', function (e) {
             const term = e.target.value.toLowerCase();
             const cards = document.querySelectorAll('.product-card');
+
+            // التأكد من أننا في صفحة المتجر عند البحث
+            if (term.length > 0 && !document.getElementById('shopPage').classList.contains('active')) {
+                showShop();
+            }
 
             cards.forEach(card => {
                 const title = card.querySelector('.product-title').textContent.toLowerCase();
