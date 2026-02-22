@@ -1962,7 +1962,7 @@
         const products = [
             {
                 id: 1,
-                title: "Ensemble Nina",
+                title: "Ensemble Nina 1",
                 price: 4000,
                 images: ["image1.jpg", "image2.jpg"],
                 videos: ["video1.mp4"],
@@ -1972,7 +1972,7 @@
             },
             {
                 id: 2,
-                title: "Ensemble Nina",
+                title: "Ensemble Nina 2",
                 price: 4000,
                 images: ["image3.jpg", "image4.jpg", "image5.jpg"],
                 videos: [],
@@ -2405,19 +2405,29 @@
 
             const wilayaName = wilayas.find(w => w.code === document.getElementById('wilayaSelectPage').value)?.name;
 
-            let message = '🛍️ *طلب جديد من Nina Touch*\\n\\n';
-            message += '👤 *الاسم:* ' + e.target.querySelector('input[placeholder="اسمك"]').value + '\\n';
-            message += '📱 *الهاتف:* ' + e.target.querySelector('input[placeholder="05XX XX XX XX"]').value + '\\n';
-            message += '📍 *الولاية:* ' + wilayaName + '\\n';
-            message += '🏘️ *البلدية:* ' + e.target.querySelector('input[placeholder="اسم البلدية"]').value + '\\n';
-            message += '🚚 *التوصيل:* ' + (selectedDelivery === 'home' ? 'للمنزل' : 'للمكتب') + '\\n\\n';
-            message += '📦 *المنتجات:*\\n';
+            let message = '🛍️ *تأكيد طلب جديد - Nina Touch*\n';
+            message += '━━━━━━━━━━━━━━━\n\n';
+            message += '👤 *معلومات الزبونة:*\n';
+            message += '  • *الاسم:* ' + e.target.querySelector('input[placeholder="اسمك"]').value + '\n';
+            message += '  • *الهاتف:* ' + e.target.querySelector('input[placeholder="05XX XX XX XX"]').value + '\n\n';
+
+            message += '📍 *معلومات التوصيل:*\n';
+            message += '  • *الولاية:* ' + wilayaName + '\n';
+            message += '  • *البلدية:* ' + e.target.querySelector('input[placeholder="اسم البلدية"]').value + '\n';
+            message += '  • *نوع التوصيل:* ' + (selectedDelivery === 'home' ? 'للمنزل' : 'للمكتب') + '\n\n';
+
+            message += '📦 *تفاصيل المنتجات:*\n';
+            message += '━━━━━━━━━━━━━━━\n';
 
             cart.forEach(item => {
-                message += `- ${item.title} (مقاس: ${item.size}) × ${item.quantity} = ${(item.price * item.quantity).toLocaleString()} دج\\n`;
+                message += `- ${item.title}\n`;
+                message += `  مقاس: ${item.size}\n`; 
+                message += `  ${item.quantity} × ${item.price.toLocaleString()} = ${(item.price * item.quantity).toLocaleString()} دج\n\n`;
             });
 
-            message += '\\n💰 *المجموع:* ' + document.getElementById('finalTotalPage').textContent;
+            message += '━━━━━━━━━━━━━━━\n';
+            message += '💰 *الإجمالي النهائي:* ' + document.getElementById('finalTotalPage').textContent + '\n\n';
+            message += '✨ *شكراً لاختيارك متجرنا*';
 
             window.open(`https://wa.me/213542432117?text=${encodeURIComponent(message)}`, '_blank');
 
@@ -2536,6 +2546,5 @@
         });
     </script>
 </body>
-
 
 </html>
